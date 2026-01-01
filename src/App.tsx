@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { PokemonSprite } from "./components/Sprite";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import { getRandomType, type PokemonType } from "./utils/types";
 import { getEffectiveness } from "./utils/typeDmgCalc";
