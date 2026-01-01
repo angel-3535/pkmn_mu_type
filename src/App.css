@@ -103,6 +103,21 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .multiplier-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .multiplier-button {
+    min-width: unset;
+    width: 100%;
+  }
 }
 
 .multiplier-button {
@@ -114,6 +129,8 @@
   color: #ede9e9;
   cursor: pointer;
   transition: all 0.2s ease;
+  min-width: 10rem;
+  text-align: center;
 }
 
 .multiplier-button:hover:not(:disabled) {
