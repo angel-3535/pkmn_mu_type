@@ -136,7 +136,7 @@ function App() {
                 whileTap={{ scale: 0.95 }}
                 disabled={selectedMultiplier !== null}
               >
-                {mult === 0 ? "x0" : mult === 0.5 ? ".5x" : `${mult}x`}
+                {mult === 0 ? "0x" : mult === 0.5 ? ".5x" : `${mult}x`}
               </motion.button>
             );
           })}
