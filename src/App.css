@@ -189,6 +189,49 @@
   font-size: 1.2rem;
 }
 
+/* Mobile-friendly styles */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .previous-current-next {
+    gap: 0;
+  }
+
+  .sprite-container:not(:nth-child(2)) {
+    display: none;
+  }
+
+  .pokemon-sprite {
+    height: 35vh;
+    width: 35vh;
+  }
+
+  .score-container {
+    font-size: 1.5rem;
+  }
+
+  .multiplier-buttons {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .multiplier-button {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    min-width: 3.5rem;
+  }
+
+  .attacking-type-label {
+    font-size: 1rem;
+  }
+
+  .pokemon-type {
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
 
   .pokemon-type.normal { background-color: #A8A77A; color: #111; }
   .pokemon-type.fire { background-color: #EE8130; color: #111; }
