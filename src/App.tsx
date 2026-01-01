@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import { motion } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
