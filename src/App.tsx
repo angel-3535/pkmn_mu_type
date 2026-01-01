@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import { getRandomType, type PokemonType } from "./utils/types";
 import { getEffectiveness } from "./utils/typeDmgCalc";
+import { PrevCurrentNextSprites } from "./components/PrevCurrentNextSprites";
 
 const randomId = () => Math.floor(Math.random() * 1024) + 1;
 
@@ -24,16 +25,6 @@ function App() {
     null
   );
   const [score, setScore] = useState<number>(0);
-
-  const handleNext = () => {
-    setSprites((prev) => {
-      const newKey = keyCounter;
-      setKeyCounter((k) => k + 1);
-      return [...prev.slice(1), { id: randomId(), key: newKey }]; // Add new sprite at the end
-    });
-    setAttackingType(getRandomType());
-    setSelectedMultiplier(null);
-  };
 
   const { data: currentTypes } = useQuery({
     queryKey: ["pokemon-type", sprites[1].id],
@@ -63,6 +54,16 @@ function App() {
     }
   };
 
+  const handleNext = () => {
+    setSprites((prev) => {
+      const newKey = keyCounter;
+      setKeyCounter((k) => k + 1);
+      return [...prev.slice(1), { id: randomId(), key: newKey }]; // Add new sprite at the end
+    });
+    setAttackingType(getRandomType());
+    setSelectedMultiplier(null);
+  };
+
   return (
     <>
       <div className="container">
@@ -78,48 +79,13 @@ function App() {
             {score}
           </motion.span>
         </div>
-        <div className="previous-current-next">
-          <AnimatePresence mode="popLayout">
-            {sprites.map((sprite, index) => {
-              const isCurrent = index === 1;
-              return (
-                <motion.div
-                  key={sprite.key}
-                  initial={{ x: 200, opacity: 0, scale: 0.7 }}
-                  animate={{
-                    x: 0,
-                    opacity: isCurrent ? 1 : 0.1,
-                    scale: isCurrent ? 1 : 0.7,
-                  }}
-                  exit={{ x: -200, opacity: 0, scale: 0.7 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className="sprite-container"
-                >
-                  {isCurrent && currentTypes && (
-                    <PokemonTypeDisplay types={currentTypes} />
-                  )}
-                  <PokemonSprite
-                    dexId={sprite.id}
-                    layoutId={sprite.key.toString()}
-                    className="pokemon-sprite"
-                  />
-                  {isCurrent && (
-                    <motion.div
-                      className="attacking-type-container"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                    >
-                      <span className="attacking-type-label">
-                        Attacking Type:{" "}
-                      </span>
-                      <PokemonTypeDisplay types={[attackingType]} />
-                    </motion.div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </div>
+
+        <PrevCurrentNextSprites
+          sprites={sprites}
+          currentTypes={currentTypes}
+          attackingType={attackingType}
+        />
+
         <div className="multiplier-buttons">
           {MULTIPLIER_OPTIONS.map((mult) => {
             const isSelected = selectedMultiplier === mult;
@@ -141,6 +107,7 @@ function App() {
             );
           })}
         </div>
+
         <motion.button
           onClick={handleNext}
           className="next-button"
@@ -152,29 +119,6 @@ function App() {
         </motion.button>
       </div>
     </>
-  );
-}
-
-function PokemonTypeDisplay({ types }: { types: PokemonType[] }) {
-  return (
-    <div className="pokemon-type-container">
-      <motion.span
-        className={`pokemon-type ${types[0]}`}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        {types[0]}
-      </motion.span>
-      {types[1] && (
-        <motion.span
-          className={`pokemon-type ${types[1]}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          {types[1]}
-        </motion.span>
-      )}
-    </div>
   );
 }
 
