@@ -11,7 +11,7 @@ const MAX_POKEMON_ID = 1024;
 
 const randomId = () => Math.floor(Math.random() * MAX_POKEMON_ID) + 1;
 
-const MULTIPLIER_OPTIONS = [0, 0.5, 1, 2, 4] as const;
+const MULTIPLIER_OPTIONS = [0, 0.25, 0.5, 1, 2, 4] as const;
 
 function App() {
   const [sprites, setSprites] = useState<{ id: number; key: number }[]>(() => [
