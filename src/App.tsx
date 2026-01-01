@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "./App.css";
 import { motion } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import { getRandomType, type PokemonType } from "./utils/types";
 import { getEffectiveness } from "./utils/typeDmgCalc";
 import { PrevCurrentNextSprites } from "./components/PrevCurrentNextSprites";
+import { FastForward } from "lucide-react";
 
 const randomId = () => Math.floor(Math.random() * 1024) + 1;
 
@@ -24,6 +25,7 @@ function App() {
     null
   );
   const [score, setScore] = useState<number>(0);
+  const [fastMode, setFastMode] = useState<boolean>(false);
 
   const { data: currentTypes } = useQuery({
     queryKey: ["pokemon-type", sprites[1].id],
@@ -53,7 +55,7 @@ function App() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setSprites((prev) => {
       const newKey = keyCounter;
       setKeyCounter((k) => k + 1);
@@ -61,10 +63,26 @@ function App() {
     });
     setAttackingType(getRandomType());
     setSelectedMultiplier(null);
-  };
+  }, [keyCounter]);
+
+  useEffect(() => {
+    if (fastMode && selectedMultiplier !== null) {
+      const timer = setTimeout(() => {
+        handleNext();
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [fastMode, selectedMultiplier, handleNext]);
 
   return (
     <>
+      <button
+        onClick={() => setFastMode((f) => !f)}
+        className={`fast-mode-button ${fastMode ? "active" : ""}`}
+        title="Toggle Fast Mode"
+      >
+        <FastForward size={24} />
+      </button>
       <div className="container">
         <div className="score-container">
           <span className="score-label">Score: </span>
@@ -90,13 +108,14 @@ function App() {
             const isSelected = selectedMultiplier === mult;
             const isCorrect = correctMultiplier === mult;
             const showCorrect = selectedMultiplier !== null && isCorrect;
+            const isWrong = isSelected && !isCorrect;
             return (
               <motion.button
                 key={mult}
                 onClick={() => handleMultiplierClick(mult)}
                 className={`multiplier-button ${isSelected ? "selected" : ""} ${
                   showCorrect ? "correct" : ""
-                }`}
+                } ${isWrong ? "wrong" : ""}`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 disabled={selectedMultiplier !== null}
@@ -106,16 +125,17 @@ function App() {
             );
           })}
         </div>
-
-        <motion.button
-          onClick={handleNext}
-          className="next-button"
-          whileHover={selectedMultiplier !== null ? { scale: 1.1 } : {}}
-          whileTap={selectedMultiplier !== null ? { scale: 0.9 } : {}}
-          disabled={selectedMultiplier === null}
-        >
-          Next Pokemon
-        </motion.button>
+        {!fastMode && (
+          <motion.button
+            onClick={handleNext}
+            className="next-button"
+            whileHover={selectedMultiplier !== null ? { scale: 1.1 } : {}}
+            whileTap={selectedMultiplier !== null ? { scale: 0.9 } : {}}
+            disabled={selectedMultiplier === null}
+          >
+            Next Pokemon
+          </motion.button>
+        )}
       </div>
     </>
   );
