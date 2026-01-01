@@ -1,13 +1,11 @@
 @font-face {
     font-family: 'qrafty\'s-capizalized-font';
-    src: url('qraftys-capizalized-fontRegular.woff2') format('woff2'),
-        url('qraftys-capizalized-fontRegular.woff') format('woff');
+    src: url('/public/qraftys-capizalized-fontRegular.woff2') format('woff2'),
+        url('/public/qraftys-capizalized-fontRegular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
-
-
 
 #root {
   max-width: 1280px;
