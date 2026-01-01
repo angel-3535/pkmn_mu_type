@@ -192,7 +192,16 @@
 /* Mobile-friendly styles */
 @media (max-width: 768px) {
   #root {
-    padding: 1rem;
+    padding: 0.5rem;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .container {
+    gap: 0.5rem;
+    height: 100%;
+    justify-content: space-evenly;
   }
 
   .previous-current-next {
@@ -204,8 +213,8 @@
   }
 
   .pokemon-sprite {
-    height: 35vh;
-    width: 35vh;
+    height: 30vh;
+    width: 30vh;
   }
 
   .score-container {
