@@ -7,7 +7,9 @@ import { getEffectiveness } from "./utils/typeDmgCalc";
 import { PrevCurrentNextSprites } from "./components/PrevCurrentNextSprites";
 import { FastForward } from "lucide-react";
 
-const randomId = () => Math.floor(Math.random() * 1024) + 1;
+const MAX_POKEMON_ID = 1024;
+
+const randomId = () => Math.floor(Math.random() * MAX_POKEMON_ID) + 1;
 
 const MULTIPLIER_OPTIONS = [0, 0.5, 1, 2, 4] as const;
 
