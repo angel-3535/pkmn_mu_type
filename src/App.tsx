@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import "./App.css";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import { getRandomType, type PokemonType } from "./utils/types";
 import { getEffectiveness } from "./utils/typeDmgCalc";
@@ -125,17 +125,22 @@ function App() {
             );
           })}
         </div>
-        {!fastMode && (
-          <motion.button
-            onClick={handleNext}
-            className="next-button"
-            whileHover={selectedMultiplier !== null ? { scale: 1.1 } : {}}
-            whileTap={selectedMultiplier !== null ? { scale: 0.9 } : {}}
-            disabled={selectedMultiplier === null}
-          >
-            Next Pokemon
-          </motion.button>
-        )}
+        <AnimatePresence>
+          {!fastMode && (
+            <motion.button
+              onClick={handleNext}
+              className="next-button"
+              whileHover={selectedMultiplier !== null ? { scale: 1.1 } : {}}
+              whileTap={selectedMultiplier !== null ? { scale: 0.9 } : {}}
+              disabled={selectedMultiplier === null}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+            >
+              Next Pokemon
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
