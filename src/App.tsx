@@ -20,20 +20,19 @@ function App() {
     { id: randomId(), key: 2 },
   ]);
   const [keyCounter, setKeyCounter] = useState<number>(3);
-  const [attackingType, setAttackingType] = useState<PokemonType>(
-    getRandomType()
-  );
+  const [attackingType, setAttackingType] =
+    useState<PokemonType>(getRandomType());
   const [selectedMultiplier, setSelectedMultiplier] = useState<number | null>(
-    null
+    null,
   );
   const [score, setScore] = useState<number>(0);
-  const [fastMode, setFastMode] = useState<boolean>(false);
+  const [fastMode, setFastMode] = useState<boolean>(true);
 
   const { data: currentTypes } = useQuery({
     queryKey: ["pokemon-type", sprites[1].id],
     queryFn: async () => {
       const res = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${sprites[1].id}`
+        `https://pokeapi.co/api/v2/pokemon/${sprites[1].id}`,
       );
       const data = await res.json();
       const types: PokemonType[] = [data.types[0].type.name as PokemonType];
