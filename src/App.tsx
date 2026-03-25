@@ -90,7 +90,7 @@ function App() {
           <motion.span
             key={score}
             className="score-value"
-            initial={{ scale: 1.5, color: "#4ade80" }}
+            initial={{ scale: 1.5, color: "#4ade90" }}
             animate={{ scale: 1, color: "#facc15" }}
             transition={{ duration: 0.3 }}
           >
