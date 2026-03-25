@@ -91,7 +91,7 @@ function App() {
             key={score}
             className="score-value"
             initial={{ scale: 1.5, color: "#4ade80" }}
-            animate={{ scale: 1, color: "#ede9e9" }}
+            animate={{ scale: 1, color: "#facc15" }}
             transition={{ duration: 0.3 }}
           >
             {score}
